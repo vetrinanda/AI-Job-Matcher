@@ -1,0 +1,121 @@
+# ========== Python ==========
+__pycache__/
+*.py[oc]
+*.pyc
+*.pyo
+build/
+dist/
+wheels/
+*.egg-info/
+.Python
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Virtual environments
+.venv
+venv/
+ENV/
+env/
+.env
+.env.local
+.env.*.local
+
+# ========== Node.js / Frontend ==========
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.next/
+out/
+build/
+dist/
+.nuxt/
+.cache/
+
+# ========== IDE / Editor ==========
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.pydevproject
+.settings/
+*.sublime-workspace
+*.sublime-project
+.vim/
+.viminfo
+.jshintrc
+
+# ========== OS Files ==========
+Thumbs.db
+Desktop.ini
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ========== Testing & Coverage ==========
+.coverage
+htmlcov/
+.pytest_cache/
+.nose*
+coverage.xml
+*.cover
+.hypothesis/
+
+# ========== Logs ==========
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# ========== Build & Runtime ==========
+*.o
+*.a
+*.so
+.lds
+.dSYM/
+
+# ========== Database ==========
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+
+# ========== Mac ==========
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ========== Windows ==========
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ========== Docker ==========
+.dockerignore
+docker-compose.override.yml
+
+# ========== Misc ==========
+.env.example
+config.local.*
+local_settings.py
+secret_key.txt
+secrets/
+temp/
+tmp/
