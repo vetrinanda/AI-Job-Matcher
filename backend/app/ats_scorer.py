@@ -25,13 +25,13 @@ STOP_WORDS = {
     "minimum", "plus", "ideal", "candidate", "position", "job", "description",
 }
 
-# Section header patterns for detecting resume sections
+# Section header patterns for detecting resume sections (no inline flags — use re.IGNORECASE)
 SECTION_PATTERNS = {
-    "summary": r"(?i)(summary|objective|profile|about\s*me|personal\s*statement|professional\s*summary)",
-    "skills": r"(?i)(skills|technical\s*skills|core\s*competencies|technologies|tech\s*stack|proficiencies)",
-    "experience": r"(?i)(experience|work\s*experience|employment|professional\s*experience|work\s*history)",
-    "education": r"(?i)(education|academic|degree|university|college|certification|certifications)",
-    "projects": r"(?i)(projects|personal\s*projects|key\s*projects|portfolio|academic\s*projects)",
+    "summary": r"(summary|objective|profile|about\s*me|personal\s*statement|professional\s*summary)",
+    "skills": r"(skills|technical\s*skills|core\s*competencies|technologies|tech\s*stack|proficiencies)",
+    "experience": r"(experience|work\s*experience|employment|professional\s*experience|work\s*history)",
+    "education": r"(education|academic|degree|university|college|certification|certifications)",
+    "projects": r"(projects|personal\s*projects|key\s*projects|portfolio|academic\s*projects)",
 }
 
 
@@ -64,7 +64,7 @@ def extract_section_text(resume_text: str, section_name: str) -> str:
 
     # Find the start of the target section
     for i, line in enumerate(lines):
-        if re.search(pattern, line):
+        if re.search(pattern, line, re.IGNORECASE):
             section_start = i
             break
 
@@ -76,7 +76,7 @@ def extract_section_text(resume_text: str, section_name: str) -> str:
         p for name, p in SECTION_PATTERNS.items() if name != section_name
     )
     for i in range(section_start + 1, len(lines)):
-        if re.search(all_patterns, lines[i]):
+        if re.search(all_patterns, lines[i], re.IGNORECASE):
             section_end = i
             break
 

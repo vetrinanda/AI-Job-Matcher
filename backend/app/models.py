@@ -30,3 +30,21 @@ class ATSResult(BaseModel):
     suggestions: list[SectionSuggestion] = Field(default_factory=list, description="Improvement suggestions (populated when score < 75)")
     resume_text: str = Field(default="", description="Extracted resume text")
     job_description: str = Field(default="", description="Original job description")
+
+
+class RewrittenResume(BaseModel):
+    """AI-rewritten resume sections tailored to a job description."""
+    professional_summary: str = Field(description="Rewritten professional summary/objective")
+    skills: str = Field(description="Rewritten skills section with relevant skills highlighted")
+    experience: str = Field(description="Rewritten work experience with JD-aligned bullet points")
+    projects: str = Field(description="Rewritten projects section aligned to the role")
+    education: str = Field(description="Rewritten education section with relevant highlights")
+    additional_tips: str = Field(default="", description="Any additional tips or notes for the candidate")
+
+
+class RewriteResult(BaseModel):
+    """Response for the resume rewrite endpoint."""
+    rewritten_resume: RewrittenResume = Field(description="The fully rewritten resume sections")
+    original_score: float = Field(description="Original ATS score before rewrite")
+    message: str = Field(description="Message to the user about the rewrite")
+
