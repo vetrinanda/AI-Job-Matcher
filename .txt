@@ -1,0 +1,1 @@
+Know Analyse the project structure and create me complete ai job maker where it takes job description and resume which is in docx or pdf analyse the both description and the resume and give the ats score for it and also if the ats score is very less than 75 then give suggestions for each section like summary projects skills jeywords how can be written everthing

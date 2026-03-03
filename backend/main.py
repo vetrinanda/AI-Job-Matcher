@@ -10,7 +10,7 @@ def main():
     """Run the FastAPI server."""
     uvicorn.run(
         "app.main:app",
-        host="0.0.0.0",
+        host="localhost",
         port=8000,
         reload=True,
     )
