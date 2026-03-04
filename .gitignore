@@ -111,7 +111,7 @@ Desktop.ini
 docker-compose.override.yml
 
 # ========== Misc ==========
-.env.example
+
 config.local.*
 local_settings.py
 secret_key.txt
