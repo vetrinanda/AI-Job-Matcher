@@ -1,69 +1,92 @@
 import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 export default function ScoreBreakdown({ sectionScores }) {
   const getBarColor = (score) => {
-    if (score >= 75) return 'linear-gradient(90deg, #22c55e, #22d3ee)';
-    if (score >= 50) return 'linear-gradient(90deg, #f59e0b, #fb923c)';
-    return 'linear-gradient(90deg, #ef4444, #f97316)';
+    if (score >= 75) return 'from-green-500 to-cyan-400';
+    if (score >= 50) return 'from-amber-500 to-orange-400';
+    return 'from-red-500 to-orange-500';
   };
 
   const getScoreColor = (score) => {
-    if (score >= 75) return '#22c55e';
-    if (score >= 50) return '#f59e0b';
-    return '#ef4444';
+    if (score >= 75) return 'text-green-400';
+    if (score >= 50) return 'text-amber-400';
+    return 'text-red-400';
   };
 
   return (
-    <div className="breakdown">
-      <h2 className="breakdown__title">
-        📊 Section Breakdown
+    <div className="animate-fade-in-up delay-200 mb-8">
+      <h2 className="mb-4 flex items-center gap-2 text-lg font-bold">
+        Section Breakdown
       </h2>
-      <div className="breakdown__grid">
+
+      <div className="grid gap-3 sm:grid-cols-2">
         {sectionScores.map((section, index) => (
-          <div className="breakdown-card" key={index}>
-            <div className="breakdown-card__header">
-              <span className="breakdown-card__name">
-                {section.section_name}
-              </span>
-              <span
-                className="breakdown-card__score"
-                style={{ color: getScoreColor(section.score) }}
-              >
-                {section.score}%
-                <span style={{ color: 'var(--text-muted)', fontWeight: 400, fontSize: '0.75rem' }}>
-                  {' '}(weight: {section.max_weight}%)
+          <Card
+            key={index}
+            className="border-white/[0.06] bg-white/[0.03] transition-all duration-300 hover:border-white/[0.1] hover:bg-white/[0.05]"
+          >
+            <CardContent className="p-4">
+              {/* Header */}
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-sm font-semibold">{section.section_name}</span>
+                <span className={`text-sm font-bold ${getScoreColor(section.score)}`}>
+                  {section.score}%
+                  <span className="ml-1 text-xs font-normal text-muted-foreground">
+                    (wt: {section.max_weight}%)
+                  </span>
                 </span>
-              </span>
-            </div>
-
-            <div className="breakdown-card__bar-bg">
-              <div
-                className="breakdown-card__bar-fill"
-                style={{
-                  width: `${section.score}%`,
-                  background: getBarColor(section.score),
-                }}
-              />
-            </div>
-
-            {section.matched_keywords?.length > 0 && (
-              <div className="breakdown-card__keywords">
-                <span className="breakdown-card__keywords-label">✅ Matched</span>
-                {section.matched_keywords.slice(0, 8).map((kw, i) => (
-                  <span className="keyword-tag keyword-tag--matched" key={i}>{kw}</span>
-                ))}
               </div>
-            )}
 
-            {section.missing_keywords?.length > 0 && (
-              <div className="breakdown-card__keywords" style={{ marginTop: '0.5rem' }}>
-                <span className="breakdown-card__keywords-label">❌ Missing</span>
-                {section.missing_keywords.slice(0, 8).map((kw, i) => (
-                  <span className="keyword-tag keyword-tag--missing" key={i}>{kw}</span>
-                ))}
+              {/* Progress Bar */}
+              <div className="mb-3 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
+                <div
+                  className={`h-full rounded-full bg-gradient-to-r transition-all duration-1000 ease-out ${getBarColor(section.score)}`}
+                  style={{ width: `${section.score}%` }}
+                />
               </div>
-            )}
-          </div>
+
+              {/* Keywords */}
+              {section.matched_keywords?.length > 0 && (
+                <div className="mb-2">
+                  <span className="mb-1 block text-[0.65rem] font-semibold tracking-wider text-muted-foreground/60 uppercase">
+                    Matched
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {section.matched_keywords.slice(0, 8).map((kw, i) => (
+                      <Badge
+                        key={i}
+                        variant="outline"
+                        className="border-green-500/20 bg-green-500/10 text-[0.65rem] text-green-400"
+                      >
+                        {kw}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {section.missing_keywords?.length > 0 && (
+                <div>
+                  <span className="mb-1 block text-[0.65rem] font-semibold tracking-wider text-muted-foreground/60 uppercase">
+                    Missing
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {section.missing_keywords.slice(0, 8).map((kw, i) => (
+                      <Badge
+                        key={i}
+                        variant="outline"
+                        className="border-red-500/15 bg-red-500/10 text-[0.65rem] text-red-400"
+                      >
+                        {kw}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         ))}
       </div>
     </div>
