@@ -5,16 +5,17 @@ import ScoreGauge from './components/ScoreGauge';
 import ScoreBreakdown from './components/ScoreBreakdown';
 import Suggestions from './components/Suggestions';
 import RewriteView from './components/RewriteView';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 
 const API_URL = 'http://localhost:8000';
 
 export default function App() {
-  const [state, setState] = useState('upload'); // 'upload' | 'loading' | 'results' | 'rewriting' | 'rewrite-view'
+  const [state, setState] = useState('upload');
   const [result, setResult] = useState(null);
   const [rewriteData, setRewriteData] = useState(null);
   const [error, setError] = useState(null);
 
-  // Store the file + JD so we can re-use them for the rewrite call
   const lastFileRef = useRef(null);
   const lastJDRef = useRef('');
 
@@ -91,59 +92,86 @@ export default function App() {
   }, []);
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Header />
-      <main className="main">
-        {state === 'upload' && (
-          <>
-            <h1 className="main__title">Match Your Resume to Any Job</h1>
-            <p className="main__description">
-              Upload your resume and paste the job description to get an instant ATS compatibility score
-              with AI-powered suggestions to boost your chances.
-            </p>
 
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+        {/* Upload State */}
+        {state === 'upload' && (
+          <div className="animate-fade-in-up">
+            {/* Hero */}
+            <div className="mb-10 text-center">
+              <h1 className="mb-3 bg-gradient-to-b from-white to-white/60 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent sm:text-4xl lg:text-5xl">
+                Match Your Resume to
+                <br />
+                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  Any Job
+                </span>
+              </h1>
+              <p className="mx-auto max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+                Upload your resume and paste the job description to get an instant ATS
+                compatibility score with AI-powered suggestions to boost your chances.
+              </p>
+            </div>
+
+            {/* Error */}
             {error && (
-              <div className="error">
-                <span className="error__icon">⚠️</span>
-                <span className="error__text">{error}</span>
-              </div>
+              <Alert variant="destructive" className="mb-6 border-red-500/20 bg-red-500/5">
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
             )}
 
             <UploadForm onAnalyze={handleAnalyze} isLoading={false} />
-          </>
+          </div>
         )}
 
+        {/* Loading State */}
         {state === 'loading' && (
-          <div className="loading">
-            <div className="loading__spinner" />
-            <div className="loading__text">Analyzing your resume...</div>
-            <div className="loading__subtext">
-              Comparing keywords, scoring sections, and generating AI suggestions
+          <div className="animate-fade-in flex flex-col items-center justify-center gap-5 py-20">
+            <div className="loading-spinner" />
+            <div className="text-center">
+              <div className="text-base font-medium text-foreground">
+                Analyzing your resume...
+              </div>
+              <div className="mt-1 text-sm text-muted-foreground">
+                Comparing keywords, scoring sections, and generating AI suggestions
+              </div>
             </div>
           </div>
         )}
 
+        {/* Rewriting State */}
         {state === 'rewriting' && (
-          <div className="loading">
-            <div className="loading__spinner" />
-            <div className="loading__text">Rewriting your resume...</div>
-            <div className="loading__subtext">
-              AI is crafting an optimized version of your resume tailored to this job description
+          <div className="animate-fade-in flex flex-col items-center justify-center gap-5 py-20">
+            <div className="loading-spinner" />
+            <div className="text-center">
+              <div className="text-base font-medium text-foreground">
+                Rewriting your resume...
+              </div>
+              <div className="mt-1 text-sm text-muted-foreground">
+                AI is crafting an optimized version of your resume tailored to this job description
+              </div>
             </div>
           </div>
         )}
 
+        {/* Results State */}
         {state === 'results' && result && (
-          <>
-            <button className="back-btn" onClick={handleBack}>
-              ← Analyze Another Resume
-            </button>
+          <div className="animate-fade-in-up">
+            <Button
+              variant="outline"
+              onClick={handleBack}
+              className="mb-6 cursor-pointer border-white/[0.1] bg-white/[0.04] text-sm font-medium text-foreground transition-all duration-300 hover:border-indigo-500/30 hover:bg-indigo-500/10 hover:text-indigo-300 hover:shadow-[0_0_15px_rgba(99,102,241,0.15)]"
+            >
+              Analyze Another Resume
+            </Button>
 
             {error && (
-              <div className="error">
-                <span className="error__icon">⚠️</span>
-                <span className="error__text">{error}</span>
-              </div>
+              <Alert variant="destructive" className="mb-6 border-red-500/20 bg-red-500/5">
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
             )}
 
             <ScoreGauge
@@ -152,25 +180,17 @@ export default function App() {
               summary={result.summary}
             />
 
-            {/* Rewrite Resume Button — shown when score < 75 */}
+            {/* Rewrite Button */}
             {result.overall_score < 75 && (
-              <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                <button
-                  className="analyze-btn"
+              <div className="mb-8 text-center">
+                <Button
                   onClick={handleRewrite}
-                  style={{
-                    maxWidth: '400px',
-                    background: 'linear-gradient(135deg, #22c55e, #22d3ee)',
-                    boxShadow: '0 0 30px rgba(34, 197, 94, 0.2)',
-                  }}
+                  className="cursor-pointer border-0 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 px-10 text-base font-bold tracking-wide text-white shadow-[0_0_30px_rgba(16,185,129,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_40px_rgba(20,184,166,0.5)] active:translate-y-0"
+                  size="lg"
                 >
-                  ✨ Rewrite My Resume with AI
-                </button>
-                <p style={{
-                  color: 'var(--text-muted)',
-                  fontSize: '0.8rem',
-                  marginTop: '0.5rem',
-                }}>
+                  Rewrite My Resume with AI
+                </Button>
+                <p className="mt-2 text-xs text-muted-foreground">
                   AI will rewrite your entire resume to match this job description
                 </p>
               </div>
@@ -181,9 +201,10 @@ export default function App() {
             {result.suggestions && result.suggestions.length > 0 && (
               <Suggestions suggestions={result.suggestions} />
             )}
-          </>
+          </div>
         )}
 
+        {/* Rewrite View State */}
         {state === 'rewrite-view' && rewriteData && (
           <RewriteView
             rewriteData={rewriteData}
