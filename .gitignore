@@ -1,45 +1,40 @@
 # ========== Python ==========
 __pycache__/
-*.py[oc]
-*.pyc
-*.pyo
+*.py[cod]
+*.egg-info/
+*.egg
 build/
 dist/
 wheels/
-*.egg-info/
 .Python
-*.egg
 pip-log.txt
 pip-delete-this-directory.txt
 .tox/
-.coverage
-.coverage.*
-htmlcov/
-.pytest_cache/
 .mypy_cache/
 .dmypy.json
 dmypy.json
 
 # Virtual environments
-.venv
+.venv/
 venv/
 ENV/
 env/
-.env
 
+# ========== Environment / Secrets ==========
+.env
+.env.*
+config.local.*
+local_settings.py
+secret_key.txt
+secrets/
 
 # ========== Node.js / Frontend ==========
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
 .next/
 out/
-build/
-dist/
 .nuxt/
 .cache/
 
@@ -49,7 +44,6 @@ dist/
 *.swp
 *.swo
 *~
-.DS_Store
 .project
 .pydevproject
 .settings/
@@ -57,19 +51,21 @@ dist/
 *.sublime-project
 .vim/
 .viminfo
-.jshintrc
 
 # ========== OS Files ==========
-Thumbs.db
-Desktop.ini
+.DS_Store
 .AppleDouble
 .LSOverride
 ._*
 .Spotlight-V100
 .Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
 
 # ========== Testing & Coverage ==========
 .coverage
+.coverage.*
 htmlcov/
 .pytest_cache/
 .nose*
@@ -80,8 +76,6 @@ coverage.xml
 # ========== Logs ==========
 logs/
 *.log
-npm-debug.log*
-yarn-debug.log*
 
 # ========== Build & Runtime ==========
 *.o
@@ -96,25 +90,9 @@ yarn-debug.log*
 *.sqlite3
 *.dump
 
-# ========== Mac ==========
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# ========== Windows ==========
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
 # ========== Docker ==========
-.dockerignore
 docker-compose.override.yml
 
 # ========== Misc ==========
-
-config.local.*
-local_settings.py
-secret_key.txt
-secrets/
 temp/
 tmp/
