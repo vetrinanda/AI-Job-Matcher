@@ -11,7 +11,7 @@ from app.models import SectionScore, SectionSuggestion
 
 load_dotenv()
 
-
+#Protect your api keys dont push it to github
 # ── Dependencies passed to the agent at runtime ──────────────────────────────
 @dataclass
 class AnalysisDeps:
