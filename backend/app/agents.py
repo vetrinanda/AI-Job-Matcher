@@ -1,4 +1,4 @@
-"""AI Suggestion Agent — uses Pydantic AI with Google Gemini to generate resume improvement suggestions. and updates it"""
+"""AI Suggestion Agent — uses Pydantic AI with Google Gemini to generate resume improvement suggestions. and updates it and gives you good ats resume"""
 
 import os
 from dataclasses import dataclass
